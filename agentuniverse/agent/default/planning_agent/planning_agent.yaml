@@ -3,8 +3,8 @@ info:
   description: 'planning agent'
 profile:
   llm_model:
-    name: 'default_openai_llm'
-    model_name: 'gpt-3.5-turbo'
+    name: 'default_deepseek_llm'
+    model_name: 'deepseek-chat'
     temperature: 0.7
 plan:
   planner:

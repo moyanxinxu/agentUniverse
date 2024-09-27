@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # @Time    : 2024/5/21 17:49
-# @Author  : weizjajj 
+# @Author  : weizjajj
 # @Email   : weizhongjie.wzj@antgroup.com
 # @FileName: claude_llm.py
 
@@ -31,12 +31,10 @@ class DefaultDeepSeekLLM(OpenAIStyleLLM):
     LLM parameters, such as name/description/model_name/max_tokens,
     are injected into this class by the default_openai_llm.yaml configuration.
     """
-
     api_key: Optional[str] = Field(default_factory=lambda: get_from_env("DEEPSEEK_API_KEY"))
     organization: Optional[str] = Field(default_factory=lambda: get_from_env("DEEPSEEK_ORGANIZATION"))
     api_base: Optional[str] = Field(default_factory=lambda: get_from_env("DEEPSEEK_API_BASE"))
     proxy: Optional[str] = Field(default_factory=lambda: get_from_env("DEEPSEEK_PROXY"))
-
     def _call(self, messages: list, **kwargs: Any) -> Union[LLMOutput, Iterator[LLMOutput]]:
         """ The call method of the LLM.
 

@@ -3,7 +3,8 @@ info:
   description: 'demo nl2api agent'
 profile:
   llm_model:
-    name: 'default_qwen_llm'
+    name: 'default_deepseek_llm'
+    model_name: 'deepseek-chat'
 action:
   tool:
     - 'add'

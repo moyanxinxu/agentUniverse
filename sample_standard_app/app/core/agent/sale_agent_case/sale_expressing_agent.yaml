@@ -1,8 +1,8 @@
 info:
-  name: 'demo_expressing_agent'
-  description: 'demo expressing agent'
+  name: 'sale_expressing_agent'
+  description: 'sale expressing agent'
 profile:
-  prompt_version: demo_expressing_agent.cn
+  prompt_version: sale_expressing_agent_cn
   llm_model:
     name: 'default_deepseek_llm'
     model_name: 'deepseek-chat'

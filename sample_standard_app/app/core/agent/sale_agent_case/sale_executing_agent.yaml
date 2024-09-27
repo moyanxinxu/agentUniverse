@@ -1,8 +1,8 @@
 info:
-  name: 'demo_executing_agent'
-  description: 'demo executing agent'
+  name: 'sale_executing_agent'
+  description: 'sale executing agent'
 profile:
-  prompt_version: demo_executing_agent.cn
+  prompt_version: sale_executing_agent_cn
   llm_model:
     name: 'default_deepseek_llm'
     model_name: 'deepseek-chat'

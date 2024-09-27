@@ -1,0 +1,16 @@
+info:
+  name: 'sale_peer_agent'
+  description: 'sale peer agent'
+plan:
+  planner:
+    name: 'peer_planner'
+    eval_threshold: 60
+    retry_count: 2
+    planning: 'sale_planning_agent'
+    executing: 'sale_executing_agent'
+    expressing: 'sale_expressing_agent'
+    reviewing: 'sale_reviewing_agent'
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.default.peer_agent.peer_agent'
+  class: 'PeerAgent'

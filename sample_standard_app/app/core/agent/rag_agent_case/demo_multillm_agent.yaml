@@ -19,6 +19,7 @@ profile:
 #    model_name: 'ERNIE-3.5-8K'
 #    name: 'deep_seek_llm'
     name: 'default_deepseek_llm'
+    model_name: 'deepseek-chat'
 plan:
   planner:
     name: 'rag_planner'

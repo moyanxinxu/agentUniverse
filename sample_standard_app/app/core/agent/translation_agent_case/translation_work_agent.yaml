@@ -6,7 +6,8 @@ profile:
   input_keys: ['source_lang','target_lang','source_text']
   output_keys: ['output']
   llm_model:
-    name: 'default_qwen_llm'
+    name: 'default_deepseek_llm'
+    model_name: 'deepseek-chat'
     max_tokens: 1000
 plan:
   planner:

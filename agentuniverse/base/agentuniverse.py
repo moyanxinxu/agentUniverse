@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # @Time    : 2024/4/2 15:27
-# @Author  : jerry.zzw 
+# @Author  : jerry.zzw
 # @Email   : jerry.zzw@antgroup.com
 # @FileName: agentuniverse.py
 import importlib
@@ -179,10 +179,7 @@ class AgentUniverse(object):
         for component_enum, component_configer_list in component_configer_list_map.items():
             self.__register(component_enum, component_configer_list)
 
-    def scan(self,
-             package_list: [str],
-             config_type_enum: ConfigTypeEnum,
-             component_enum: ComponentEnum) -> list:
+    def scan(self, package_list, config_type_enum: ConfigTypeEnum, component_enum: ComponentEnum) -> list:
         """Scan the component directory and return certain component configer list.
 
         Args:

@@ -9,8 +9,8 @@ profile:
 
     The question that needs to be answered is: {input}
   llm_model:
-    name: 'demo_llm'
-    model_name: 'gpt-4o'
+    name: 'default_deepseek_llm'
+    model_name: 'deepseek-chat'
 plan:
   planner:
     name: 'rag_planner'

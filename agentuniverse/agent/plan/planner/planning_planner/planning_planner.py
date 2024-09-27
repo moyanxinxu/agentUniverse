@@ -53,6 +53,14 @@ class PlanningPlanner(Planner):
             input_messages_key=self.input_key,
         ) | StrOutputParser()
         res = self.invoke_chain(agent_model, chain_with_history, planner_input, chat_history, input_object)
+
+        #     "thought": "为了帮助上海考生预估450分的学生填报志愿，首先需要了解哪些一二线城市有适合技术与艺术结合的专业的高校。其次，需要确定这些高校的录取分数线是否在450分左右。最后，需要了解这些专业的就业前景和市场需求。",
+        #     "framework": [
+        #         "哪些一二线城市有适合技术与艺术结合的专业的高校",
+        #         "这些高校的录取分数线是否在450分左右",
+        #         "这些专业的就业前景和市场需求如何"
+        #     ]
+        # }
         return {**planner_input, self.output_key: res, 'chat_history': generate_memories(chat_history)}
 
     def handle_prompt(self, agent_model: AgentModel, planner_input: dict) -> Prompt:

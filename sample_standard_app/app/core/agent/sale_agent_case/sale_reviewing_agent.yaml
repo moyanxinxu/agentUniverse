@@ -1,11 +1,11 @@
 info:
-  name: 'ReviewingAgent'
-  description: 'reviewing agent'
+  name: 'sale_reviewing_agent'
+  description: 'sale reviewing agent'
 profile:
   llm_model:
     name: 'default_deepseek_llm'
     model_name: 'deepseek-chat'
-    temperature: 0.7
+    temperature: 0.5
 plan:
   planner:
     name: 'reviewing_planner'

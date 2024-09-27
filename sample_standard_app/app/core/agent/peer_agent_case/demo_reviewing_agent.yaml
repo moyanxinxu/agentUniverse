@@ -3,7 +3,8 @@ info:
   description: 'demo reviewing agent'
 profile:
   llm_model:
-    name: 'qwen_llm'
+    name: 'default_deepseek_llm'
+    model_name: 'deepseek-chat'
     temperature: 0.5
 plan:
   planner:

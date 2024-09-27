@@ -2,13 +2,13 @@
 # -*- coding:utf-8 -*-
 
 # @Time    : 2024/6/12 16:36
-# @Author  : weizjajj 
+# @Author  : weizjajj
 # @Email   : weizhongjie.wzj@antgroup.com
 # @FileName: python_repl.py
 
 import re
 
-from langchain_community.utilities import PythonREPL
+from langchain_experimental.utilities import PythonREPL
 from pydantic import Field
 from agentuniverse.agent.action.tool.tool import Tool, ToolInput
 

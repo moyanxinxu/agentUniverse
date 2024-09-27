@@ -22,4 +22,5 @@ def chat(question: str):
 
 
 if __name__ == '__main__':
-    chat("帮我分析下2023年巴菲特减持比亚迪原因")
+    question = '''中国劳动法中关于陪产假的规定是什么\n该公司是否提供陪产假\n申请陪产假需要满足哪些条件\n申请陪产假的流程是什么'''
+    chat(question)

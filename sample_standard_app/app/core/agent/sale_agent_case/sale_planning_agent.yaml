@@ -1,8 +1,8 @@
 info:
-  name: 'demo_planning_agent'
-  description: 'demo planning agent'
+  name: 'sale_planning_agent'
+  description: 'sale planning agent'
 profile:
-  prompt_version: demo_planning_agent.cn
+  prompt_version: sale_planning_agent_cn
   llm_model:
     name: 'default_deepseek_llm'
     model_name: 'deepseek-chat'

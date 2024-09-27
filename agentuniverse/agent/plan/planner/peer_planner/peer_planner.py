@@ -41,7 +41,22 @@ class PeerPlanner(Planner):
         Returns:
             dict: The planner result.
         """
+
         planner_config = agent_model.plan.get('planner')
+
+        """
+        {
+        name: 'peer_planner'
+        eval_threshold: 60
+        retry_count: 2
+        planning: 'demo_planning_agent'
+        executing: 'demo_executing_agent'
+        expressing: 'demo_expressing_agent'
+        reviewing: 'demo_reviewing_agent'
+        }
+        """
+
+        # peer_planner --> p+e+e+r
         sub_agents = self.generate_sub_agents(planner_config)
         return self.agents_run(sub_agents, planner_config, planner_input, input_object)
 
@@ -55,11 +70,19 @@ class PeerPlanner(Planner):
             dict: Planner agents.
         """
         agents = dict()
+        # default_sub_agents是peer的四个组成部分，字典格式。
         for config_key, default_agent in default_sub_agents.items():
             config_data = planner_config.get(config_key, None)
             if config_data == '':
                 continue
             agents[config_key] = AgentManager().get_instance_obj(config_data if config_data else default_agent)
+
+        # agents: 四个agents
+        # {'executing': ExecutingAgent(component_type=<ComponentEnum.AGENT: 'AGENT'>, component_config_path='/root/Documents/agentUniverse/sample_standard_app/app/core/agent/peer_agent_case/demo_executing_agent.yaml', default_symbol=False, agent_model=AgentModel(info={'name': 'demo_executing_agent', 'description': 'demo executing agent'}, profile={'prompt_version': 'demo_executing_agent.cn', 'llm_model': {'name': 'default_deepseek_llm', 'model_name': 'deepseek-chat', 'temperature': 0.4}}, plan={'planner': {'name': 'executing_planner'}}, memory={'name': ''}, action={'knowledge': [''], 'tool': ['google_search_tool']}), executor=<concurrent.futures.thread.ThreadPoolExecutor object at 0xffff992ea8c0>),
+        # 'expressing': ExpressingAgent(component_type=<ComponentEnum.AGENT: 'AGENT'>, component_config_path='/root/Documents/agentUniverse/sample_standard_app/app/core/agent/peer_agent_case/demo_expressing_agent.yaml', default_symbol=False, agent_model=AgentModel(info={'name': 'demo_expressing_agent', 'description': 'demo expressing agent'}, profile={'prompt_version': 'demo_expressing_agent.cn', 'llm_model': {'name': 'default_deepseek_llm', 'model_name': 'deepseek-chat', 'temperature': 0.2, 'prompt_processor': {'type': 'stuff'}}}, plan={'planner': {'name': 'expressing_planner'}}, memory={'name': ''}, action={})),
+        # 'planning': PlanningAgent(component_type=<ComponentEnum.AGENT: 'AGENT'>, component_config_path='/root/Documents/agentUniverse/sample_standard_app/app/core/agent/peer_agent_case/demo_planning_agent.yaml', default_symbol=False, agent_model=AgentModel(info={'name': 'demo_planning_agent', 'description': 'demo planning agent'}, profile={'prompt_version': 'demo_planning_agent.cn', 'llm_model': {'name': 'default_deepseek_llm', 'model_name': 'deepseek-chat', 'temperature': 0.5}}, plan={'planner': {'name': 'planning_planner'}}, memory={'name': ''}, action={})),
+        # 'reviewing': ReviewingAgent(component_type=<ComponentEnum.AGENT: 'AGENT'>, component_config_path='/root/Documents/agentUniverse/sample_standard_app/app/core/agent/peer_agent_case/demo_reviewing_agent.yaml', default_symbol=False, agent_model=AgentModel(info={'name': 'demo_reviewing_agent', 'description': 'demo reviewing agent'}, profile={'llm_model': {'name': 'default_deepseek_llm', 'model_name': 'deepseek-chat', 'temperature': 0.5}}, plan={'planner': {'name': 'reviewing_planner'}}, memory={'name': ''}, action={}))}
+
         return agents
 
     @staticmethod
@@ -70,7 +93,7 @@ class PeerPlanner(Planner):
             planner_config (dict): Planner config object.
             input_object (InputObject): Agent input object.
         """
-        expert_framework = planner_config.get('expert_framework')
+        expert_framework = planner_config.get("expert_framework")  # None
         if expert_framework:
             context = expert_framework.get('context')
             selector = expert_framework.get('selector')
@@ -101,19 +124,20 @@ class PeerPlanner(Planner):
         reviewing_result = dict()
 
         retry_count = planner_config.get('retry_count', default_retry_count)
-        jump_step = planner_config.get('jump_step', default_jump_step)
+        jump_step = planner_config.get("jump_step", default_jump_step)  # expressing
         eval_threshold = planner_config.get('eval_threshold', default_eval_threshold)
 
+        # 构建专家框架, 在这里planner_config和input_object没变化
         self.build_expert_framework(planner_config, input_object)
 
         planningAgent: Agent = agents.get('planning')
         executingAgent: Agent = agents.get('executing')
         expressingAgent: Agent = agents.get('expressing')
         reviewingAgent: Agent = agents.get('reviewing')
-
+        # chatbi = xxx
         for _ in range(retry_count):
             LOGGER.info(f"Starting peer agents, retry_count is {_ + 1}.")
-            if not planning_result or jump_step == "planning":
+            if (not planning_result) or jump_step == "planning":
                 if not planningAgent:
                     LOGGER.warn("no planning agent.")
                     planning_result = OutputObject({"framework": [agent_input.get('input')]})
@@ -124,7 +148,10 @@ class PeerPlanner(Planner):
                 input_object.add_data('planning_result', planning_result)
                 # add planning agent log info
                 logger_info = f"\nPlanning agent execution result is :\n"
+                # one_framework: 就是chatbi的输入
                 for index, one_framework in enumerate(planning_result.get_data('framework')):
+
+                    # bi_res = chatbi.generate(one_framework)
                     logger_info += f"[{index + 1}] {one_framework} \n"
                 LOGGER.info(logger_info)
 
@@ -135,7 +162,7 @@ class PeerPlanner(Planner):
                         "agent_info": planningAgent.agent_model.info
                     }, "type": "planning"})
 
-            if not executing_result or jump_step in ["planning", "executing"]:
+            if (not executing_result) or jump_step in ["planning", "executing"]:
                 if not executingAgent:
                     LOGGER.warn("no executing agent.")
                     executing_result = OutputObject({})
@@ -160,7 +187,7 @@ class PeerPlanner(Planner):
                         "agent_info": executingAgent.agent_model.info
                     }, "type": "executing"})
 
-            if not expressing_result or jump_step in ["planning", "executing", "expressing"]:
+            if (not expressing_result) or jump_step in ["planning", "executing", "expressing"]:
                 if not expressingAgent:
                     LOGGER.warn("no expressing agent.")
                     expressing_result = OutputObject({})
@@ -181,7 +208,7 @@ class PeerPlanner(Planner):
                         "agent_info": expressingAgent.agent_model.info
                     }, "type": "expressing"})
 
-            if not reviewing_result or jump_step in ["planning", "executing", "expressing", "reviewing"]:
+            if (not reviewing_result) or jump_step in ["planning", "executing", "expressing", "reviewing"]:
                 if not reviewingAgent:
                     LOGGER.warn("no reviewing agent.")
                     loopResults.append({
