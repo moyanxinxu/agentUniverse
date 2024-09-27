@@ -1,0 +1,14 @@
+info:
+  name: 'rag_agent'
+  description: 'rag agent'
+profile:
+  llm_model:
+    name: 'default_deepseek_llm'
+    model_name: 'deepseek-chat'
+plan:
+  planner:
+    name: 'rag_planner'
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.default.rag_agent.rag_agent'
+  class: 'RagAgent'
